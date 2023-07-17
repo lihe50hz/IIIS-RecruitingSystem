@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $CI_APP_NAME
+  namespace: $CI_COMMIT_BRANCH
+  labels:
+    author: tongwen
+spec:
+  selector:
+    matchLabels:
+      app: app-$CI_APP_NAME
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app-$CI_APP_NAME
+    spec:
+      volumes:
+        - name: logback-data
+          emptyDir: {}
+      containers:
+        - name: $CI_APP_NAME
+          image: $CI_IMAGE
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: logback-data
+              mountPath: /data

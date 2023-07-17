@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: $CI_COMMIT_BRANCH
+  name: $CI_APP_NAME
+  labels:
+    app: $CI_APP_NAME
+    author: tongwen
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: $CI_APP_NAME
+  template:
+    metadata:
+      namespace: $CI_COMMIT_BRANCH
+      name: $CI_APP_NAME
+      labels:
+        app: $CI_APP_NAME
+    spec:
+      containers:
+      - name: $CI_APP_NAME
+        image: $CI_IMAGE
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: $CI_EXPOSE_PORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: $CI_COMMIT_BRANCH
+  name: $CI_APP_NAME
+  labels:
+    app: $CI_APP_NAME
+    author: tongwen
+spec:
+  selector:
+    app: $CI_APP_NAME
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: $CI_EXPOSE_PORT
+      targetPort: $CI_EXPOSE_PORT
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: $CI_APP_NAME-ingress
+  namespace: $CI_COMMIT_BRANCH
+  labels:
+    author: tongwen
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: $APP_DOMAIN
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: $CI_APP_NAME
+                port:
+                  number: $CI_EXPOSE_PORT
+

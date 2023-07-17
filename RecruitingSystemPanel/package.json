@@ -1,0 +1,120 @@
+{
+    "name": "RecruitingSystemPanel",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@babel/core": "^7.17.2",
+        "@commitlint/cli": "^16.1.0",
+        "@commitlint/config-conventional": "^16.0.0",
+        "@emotion/react": "^11.7.1",
+        "@emotion/styled": "^11.6.0",
+        "@mui/core": "^5.0.0-alpha.54",
+        "@mui/icons-material": "^5.3.1",
+        "@mui/material": "^5.4.1",
+        "@mui/styled-engine": "^5.1.0",
+        "@mui/styles": "^5.4.1",
+        "@mui/system": "^5.4.1",
+        "@mui/x-data-grid": "^5.0.1",
+        "@types/crypto-js": "^4.1.0",
+        "@types/react-router": "^5.1.11",
+        "@types/react-signature-canvas": "^1.0.1",
+        "@types/react-tabs": "^2.3.2",
+        "@uiw/react-md-editor": "^3.23.3",
+        "class-transformer": "^0.5.1",
+        "clsx": "1.0.4",
+        "color": "3.1.2",
+        "commitlint": "^16.1.0",
+        "crypto-js": "^4.1.1",
+        "eslint": "^7.32.0",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-import-resolver-typescript": "^2.4.0",
+        "history": "^5.0.0",
+        "katex": "^0.16.8",
+        "material-ui-dropzone": "^3.5.0",
+        "md-editor-rt": "^2.11.3",
+        "papaparse": "^5.3.0",
+        "prettier": "^2.3.2",
+        "react": "^18.1.0",
+        "react-copy-to-clipboard": "^5.0.3",
+        "react-dom": "^18.1.0",
+        "react-katex": "^3.0.1",
+        "react-markdown": "^5.0.3",
+        "react-native": "^0.72.1",
+        "react-native-web": "^0.19.6",
+        "react-router": "^5.3.0",
+        "react-router-dom": "^5.3.0",
+        "react-scripts": "4.0.1",
+        "react-signature-canvas": "^1.0.3",
+        "react-tabs": "^3.2.0",
+        "react-window": "^1.8.6",
+        "reflect-metadata": "^0.1.13",
+        "safecommit": "^1.0.13",
+        "xlsx": "^0.16.9",
+        "zustand": "^3.7.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build --profile",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "lint": "eslint --fix . --cache --ext .js,.jsx,.ts,.tsx --max-warnings 0",
+        "prepare": "husky install"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    },
+    "lint-staged": {
+        "./**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+            "prettier --write",
+            "yarn lint"
+        ]
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^14.1.0",
+        "@commitlint/config-conventional": "^14.1.0",
+        "@types/history": "4.7.6",
+        "@types/jest": "^26.0.15",
+        "@types/katex": "^0.16.0",
+        "@types/node": "14.14.10",
+        "@types/papaparse": "^5.2.5",
+        "@types/react": "^18.0.5",
+        "@types/react-dom": "^16.9.9",
+        "@types/react-router-dom": "^5.1.7",
+        "@typescript-eslint/eslint-plugin": "^5.4.0",
+        "@typescript-eslint/parser": "^5.4.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-import-resolver-typescript": "^2.4.0",
+        "eslint-plugin-import": "^2.20.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "husky": "^7.0.0",
+        "lint-staged": "^11.1.1",
+        "typescript": "^4.0.2"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-class-properties"
+    ],
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

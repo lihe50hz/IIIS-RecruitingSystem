@@ -1,0 +1,34 @@
+#=========================== Filebeat inputs =============================
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /data/log/*.log
+    scan_frequency: 10s
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+#================================ General =====================================
+name: consiliaFilebeat
+processors:
+  - script:
+      lang: javascript
+      id: timesFilter
+      tag: enable
+      source: >
+        function process(event) {
+            var str = event.Get("message");
+            var time = str.split(" ").slice(0,2).join(" ");
+            event.Put("log_time",time);
+        }
+  - timestamp:
+      field: log_time
+      layouts:
+        - '2023-03-28 17:44:38.750'
+      test_locale: en
+#================================ Outputs =====================================
+output.elasticsearch:
+  hosts: ["10.1.18.188:30920"]
+  protocol: "http"
+  username: ""
+  password: ""

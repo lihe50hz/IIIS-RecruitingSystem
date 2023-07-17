@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $CI_APP_NAME
+  namespace: $CI_COMMIT_BRANCH
+  labels:
+    author: tongwen
+spec:
+  selector:
+    matchLabels:
+      app: app-$CI_APP_NAME
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app-$CI_APP_NAME
+    spec:
+      volumes:
+        - name: logback-data
+          emptyDir: {}
+      containers:
+        - name: $CI_PROJ_NAME-container
+          image: $CI_IMAGE
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: logback-data
+              mountPath: /data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: $CI_APP_NAME
+  namespace: $CI_COMMIT_BRANCH
+  labels:
+    author: tongwen
+spec:
+  type: NodePort
+  selector:
+    app: app-$CI_APP_NAME
+  ports:
+    # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: $CI_EXPOSE_PORT
+      targetPort: $CI_EXPOSE_PORT
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: $CI_APP_NAME-ingress
+  namespace: $CI_COMMIT_BRANCH
+  labels:
+    author: tongwen
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: $APP_DOMAIN
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: $CI_APP_NAME
+                port:
+                  number: $CI_EXPOSE_PORT

@@ -1,0 +1,7 @@
+package Plugins.ExamPaperServiceApi
+
+import Plugins.ExamPaperServiceApi.MSAkkaExamPaperServiceMessageExtended
+import Plugins.ExamPaperServiceShared.SimpleExamPaper
+
+case class getAllExamPaper(
+) extends MSAkkaExamPaperServiceMessageExtended[Array[SimpleExamPaper]]
